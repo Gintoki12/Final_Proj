@@ -18,7 +18,9 @@ namespace Menu.Controllers
                        select d;
             if(!string.IsNullOrEmpty(searchString))
             {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 dishes = dishes.Where(d => d.Name.Contains(searchString));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
                 return View(await dishes.ToListAsync());
 
             }
@@ -27,10 +29,12 @@ namespace Menu.Controllers
 
         public async Task<IActionResult> Details (int? id)
         {
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
             var dish = await _context.Dishes
                 .Include(di => di.DishIngredients)
                 .ThenInclude(i => i.Ingredient)
                 .FirstOrDefaultAsync(x => x.Id == id);
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
 
             if (dish == null) 
             {

@@ -16,11 +16,25 @@
     <div class="d-flex justify-content-center">
         Ingredients:
         <ul>
-            @foreach(var item in Model.DishIngredients)
+            @if (Model.DishIngredients != null) // Check if Model.DishIngredients is not null
             {
-                <li>
-                    @item.Ingredient.Name
-                </li>
+                @foreach(var item in Model.DishIngredients)
+                {
+                    <li>
+                        @if (item.Ingredient != null && item.Ingredient.Name != null) // Check if Ingredient and Ingredient.Name are not null
+                        {
+                            @item.Ingredient.Name
+                        }
+                        else
+                        {
+                            <text>Unknown Ingredient</text>
+                        }
+                    </li>
+                }
+            }
+            else
+            {
+                <li>No Ingredients available</li>
             }
         </ul>
     </div>
